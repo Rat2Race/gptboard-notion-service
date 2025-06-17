@@ -10,7 +10,7 @@
 
 </div>
 
----
+<br>
 
 ## 🚩 Table of Contents
 
@@ -21,7 +21,8 @@
 - [Database Schema](#database-schema)
 - [API Endpoints](#api-endpoints)
 - [TroubleShooting](#troubleshooting)
----
+
+<br>
 
 ## ✨ Features <a name="features"></a>
 
@@ -31,7 +32,7 @@
 - GPT API 기반 자동 퀴즈 생성
 - 퀴즈 풀이 및 정답/해설 확인
 
----
+<br>
 
 ## 🛠 Tech Stack <a name="tech-stack"></a>
 
@@ -45,7 +46,7 @@
   <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=githubactions&logoColor=white" alt="GitHub Actions" />
 </p>
 
----
+<br>
 
 ## 🚀 Getting Started <a name="getting-started"></a>
 
@@ -74,7 +75,7 @@ $ cd ../frontend
 $ npm start
 ```
 
----
+<br>
 
 ## 🗺 Roadmap <a name="roadmap"></a>
 
@@ -83,13 +84,13 @@ $ npm start
 - [ ] GPT API 연동 퀴즈 생성
 - [ ] 퀴즈 풀이 UI 구현
 
----
+<br>
 
 ## 🗄️ Database Schema <a name="database-schema"></a>
 
 ERD 다이어그램 (DB 좀 더 공부하고 적어야지)
 
----
+<br>
 
 ## 🔗 API Endpoints <a name="api-endpoints"></a>
 
@@ -97,7 +98,7 @@ ERD 다이어그램 (DB 좀 더 공부하고 적어야지)
 | ------ | -------- | ----------- |
 | ...    | ...      | ...         |
 
----
+<br>
 
 ## 🐛 TroubleShooting <a name="troubleshooting"></a>
 
