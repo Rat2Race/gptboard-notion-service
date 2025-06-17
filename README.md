@@ -6,7 +6,7 @@
 ### Notion Review App Backend ✅
 <img src="https://img.shields.io/badge/Spring%20Boot-3.5.x-green" alt="Spring Boot" />
 <img src="https://img.shields.io/badge/OpenAI-GPT-blueviolet" alt="OpenAI" />
-<img src="https://img.shields.io/badge/Project%20Duration-2025.06.01~-%23a8e063?style=flat" alt="Project Duration" />
+<img src="https://img.shields.io/badge/Project%20Duration-2025.06.17~-%23a8e063?style=flat" alt="Project Duration" />
 
 </div>
 
