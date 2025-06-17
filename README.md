@@ -1,6 +1,5 @@
 <div align="center">
 
-<!-- logo -->
 <img src="public/image/tiredMouse.png" width="200"/>
 
 ### Notion Review App Backend ✅
