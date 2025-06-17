@@ -4,7 +4,7 @@
 <img src="public/image/tiredMouse.png" width="200"/>
 
 ### Notion Review App Backend ✅
-<img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-green" alt="spring boot" />
+<img src="https://img.shields.io/badge/Spring%20Boot-3.5.x-green" alt="spring boot" />
 <img src="https://img.shields.io/badge/OpenAI-GPT-blueviolet" alt="OpenAI" />
 <img src="https://img.shields.io/badge/project%20duration-2025.06.01~-%23a8e063?style=flat" alt="project duration" />
 
@@ -37,8 +37,7 @@
 ## 🛠 Tech Stack <a name="tech-stack"></a>
 
 <p align="left">
-  <img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot" />
-  <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-3.5.x-6DB33F?logo=springboot&logoColor=white" alt="Spring Boot" />
   <img src="https://img.shields.io/badge/MySQL-005C84?logo=mysql&logoColor=white" alt="MySQL" />
   <img src="https://img.shields.io/badge/OpenAI-GPT-412991?logo=openai&logoColor=white" alt="OpenAI" />
   <img src="https://img.shields.io/badge/Notion-000000?logo=notion&logoColor=white" alt="Notion" />
