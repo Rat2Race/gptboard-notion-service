@@ -1,12 +1,14 @@
-# <img src="public/image/tiredMouse.png"/>
+<div align="center">
 
-> Notion 노트를 자동으로 퀴즈로 변환해주는 AI 기반 복습 웹앱
+<!-- logo -->
+<img src="public/image/tiredMouse.png" width="200"/>
 
+### Notion Review App Backend ✅
 <img src="https://img.shields.io/badge/Spring%20Boot-3.3.x-green" alt="spring boot" />
 <img src="https://img.shields.io/badge/OpenAI-GPT-blueviolet" alt="OpenAI" />
 <img src="https://img.shields.io/badge/project%20duration-2025.06.01~-%23a8e063?style=flat" alt="project duration" />
 
-<img src="https://cdn-icons-png.flaticon.com/512/5968/5968885.png" alt="앱 사용 예시(추후 캡쳐)" style="margin: 20px 0;" />
+</div>
 
 ---
 
