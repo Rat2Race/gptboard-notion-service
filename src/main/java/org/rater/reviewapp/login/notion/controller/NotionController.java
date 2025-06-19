@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import org.rater.reviewapp.login.config.NotionProperties;
+import org.rater.reviewapp.login.notion.dto.NotionRevokeRequest;
 import org.rater.reviewapp.login.notion.dto.NotionTokenRequest;
 import org.rater.reviewapp.login.notion.dto.NotionTokenResponse;
 import org.rater.reviewapp.login.notion.service.NotionService;
@@ -26,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Notion API", description = "Notion 서비스 관련 처리 Controller")
 public class NotionController {
 
-    private final NotionService notionTokenService;
+    private final NotionService notionService;
 
     /**
-     * 백엔드 테스트용 / 프론트에서 구현할 예정
-     * 프론트에서 인증 링크 제공해서 클라이언트의 코드값을 받아야함
+     * 백엔드 테스트용 / 프론트에서 구현할 예정 프론트에서 인증 링크 제공해서 클라이언트의 코드값을 받아야함
      *
      * @param response
      * @throws IOException
@@ -42,12 +41,11 @@ public class NotionController {
     )
     @ApiResponse(responseCode = "302", description = "Notion 인증 URL로 리다이렉트")
     public void notionLogin(HttpServletResponse response) throws IOException {
-        response.sendRedirect(notionTokenService.getNotionOAuthUrl());
+        response.sendRedirect(notionService.getNotionOAuthUrl());
     }
 
     /**
-     * 백엔드 테스트용 / 프론트에서 구현할 예정
-     * 프론트에서 코드값과 함께 /oauth/token 으로 post request 해줘야함
+     * 백엔드 테스트용 / 프론트에서 구현할 예정 프론트에서 코드값과 함께 /oauth/token 으로 post request 해줘야함
      *
      * @param code
      * @return
@@ -63,9 +61,20 @@ public class NotionController {
         summary = "Notion 액세스 토큰 발급",
         description = "Notion 인증 코드를 이용해 액세스 토큰을 발급합니다."
     )
-    public ResponseEntity<NotionTokenResponse> generateNotionAccessToken(
-        @RequestBody NotionTokenRequest notionTokenRequest) {
-        NotionTokenResponse response = notionTokenService.generateToken(notionTokenRequest);
+    public ResponseEntity<NotionTokenResponse> generateNotionToken(
+        @RequestBody NotionTokenRequest request) {
+        NotionTokenResponse response = notionService.generateToken(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PostMapping("/oauth/revoke")
+    @Operation(
+        summary = "Notion 액세스 토큰 취소",
+        description = "Notion 액세스 토큰을 삭제합니다."
+    )
+    public ResponseEntity<Boolean> revokeNotionToken(
+        @RequestBody NotionRevokeRequest request) {
+        boolean response = notionService.revokeToken(request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

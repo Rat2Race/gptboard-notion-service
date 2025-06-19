@@ -3,6 +3,13 @@ package org.rater.reviewapp.login.notion.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+/**
+ * 나중에 DTO에 @VALID 적용시킬 예정
+ * @param grantType
+ * @param code
+ * @param redirectUri
+ */
+
 public record NotionTokenRequest(
     @Schema(description = "OAuth 인증 방식", example = "authorization_code")
     @JsonProperty("grant_type")
