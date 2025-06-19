@@ -3,3 +3,12 @@ spring:
     name: Review-app
   profiles:
     include: secret
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+    enabled: true
+#  packages-to-scan: 문서화할 패키지 지정 (최적화/속도 개선)
+

@@ -1,5 +1,12 @@
 package org.rater.reviewapp.login.notion.controller;
 
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -18,22 +25,39 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
+@Tag(name = "Notion API", description = "Notion 서비스 관련 처리 Controller")
 public class NotionController {
 
     private final NotionService notionTokenService;
 
     @GetMapping("/oauth/login")
+    @Operation(
+        summary = "Notion OAuth 로그인 리다이렉트",
+        description = "Notion 인증을 위해 외부 인증 페이지로 리다이렉트합니다."
+    )
+    @ApiResponse(responseCode = "302", description = "Notion 인증 URL로 리다이렉트")
     public void notionLogin(HttpServletResponse response) throws IOException {
         String authUrl = notionTokenService.generateAuthUrl();
         response.sendRedirect(authUrl);
     }
 
+    /**
+     * 백엔드 테스트용 / 프론트에서 구현할 예정
+     *
+     * @param code
+     * @return
+     */
     @GetMapping("/oauth/callback")
+    @Hidden
     public String notionCallback(@RequestParam("code") String code) {
         return code;
     }
 
     @PostMapping("/oauth/token")
+    @Operation(
+        summary = "Notion 액세스 토큰 발급",
+        description = "Notion 인증 코드를 이용해 액세스 토큰을 발급합니다."
+    )
     public ResponseEntity<NotionTokenResponse> generateNotionAccessToken(
         @RequestBody NotionTokenRequest notionTokenRequest) {
         NotionTokenResponse response = notionTokenService.generateToken(notionTokenRequest);
