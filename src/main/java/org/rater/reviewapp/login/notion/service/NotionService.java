@@ -1,11 +1,10 @@
 package org.rater.reviewapp.login.notion.service;
 
 import java.util.Base64;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.rater.reviewapp.login.config.NotionProperties;
 import org.rater.reviewapp.login.notion.dto.NotionTokenRequest;
 import org.rater.reviewapp.login.notion.dto.NotionTokenResponse;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -14,39 +13,29 @@ import org.springframework.web.client.RestClient;
 @RequiredArgsConstructor
 public class NotionService {
 
-    @Value("${NOTION_CLIENT_ID}")
-    private String notionClientId;
-
-    @Value("${NOTION_CLIENT_SECRET}")
-    private String notionClientSecret;
-
-    @Value("${NOTION_VERSION}")
-    private String notionVersion;
-
-    @Value("${NOTION_REDIRECT_URI}")
-    private String notionRedirectUrl;
-
+    private final NotionProperties notion;
     private final RestClient notionClient;
 
-    public String generateAuthUrl() {
-        return "https://api.notion.com/v1/oauth/authorize?"
-            + "client_id=" + notionClientId
-            + "&response_type=code"
-            + "&owner=user"
-            + "&redirect_uri=" + notionRedirectUrl;
-    }
-
     public NotionTokenResponse generateToken(NotionTokenRequest request) {
-        String credentials = notionClientId + ":" + notionClientSecret;
+        String credentials = notion.getClientId() + ":" + notion.getClientSecret();
         String encoded = Base64.getEncoder().encodeToString(credentials.getBytes());
 
         return notionClient.post()
             .uri("/oauth/token")
             .body(request)
             .header("Authorization", "Basic " + encoded)
-            .header("Notion-Version", notionVersion)
+            .header("Notion-Version", notion.getVersion())
             .contentType(MediaType.APPLICATION_JSON)
             .retrieve()
             .body(NotionTokenResponse.class);
     }
+
+    /**
+     * 프론트에서 만들면 삭제할 예정
+     * @return
+     */
+    public String getNotionOAuthUrl() {
+        return notion.getOauthUrl();
+    }
+
 }

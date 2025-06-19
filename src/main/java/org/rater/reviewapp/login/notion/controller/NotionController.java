@@ -2,14 +2,12 @@ package org.rater.reviewapp.login.notion.controller;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.rater.reviewapp.login.config.NotionProperties;
 import org.rater.reviewapp.login.notion.dto.NotionTokenRequest;
 import org.rater.reviewapp.login.notion.dto.NotionTokenResponse;
 import org.rater.reviewapp.login.notion.service.NotionService;
@@ -30,6 +28,13 @@ public class NotionController {
 
     private final NotionService notionTokenService;
 
+    /**
+     * 백엔드 테스트용 / 프론트에서 구현할 예정
+     * 프론트에서 인증 링크 제공해서 클라이언트의 코드값을 받아야함
+     *
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/oauth/login")
     @Operation(
         summary = "Notion OAuth 로그인 리다이렉트",
@@ -37,12 +42,12 @@ public class NotionController {
     )
     @ApiResponse(responseCode = "302", description = "Notion 인증 URL로 리다이렉트")
     public void notionLogin(HttpServletResponse response) throws IOException {
-        String authUrl = notionTokenService.generateAuthUrl();
-        response.sendRedirect(authUrl);
+        response.sendRedirect(notionTokenService.getNotionOAuthUrl());
     }
 
     /**
      * 백엔드 테스트용 / 프론트에서 구현할 예정
+     * 프론트에서 코드값과 함께 /oauth/token 으로 post request 해줘야함
      *
      * @param code
      * @return
