@@ -1,4 +1,4 @@
-package org.rater.reviewapp.login.config;
+package org.rater.reviewapp.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +10,7 @@ public class RestClientConfig {
     @Bean
     public RestClient notionClient() {
         return RestClient.builder()
-                .baseUrl("https://api.notion.com/v1")
-                .build();
+            .baseUrl("https://api.notion.com/v1")
+            .build();
     }
-
 }

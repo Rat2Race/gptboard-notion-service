@@ -1,4 +1,4 @@
-package org.rater.reviewapp.login.notion.dto;
+package org.rater.reviewapp.login.notion.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
