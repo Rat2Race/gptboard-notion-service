@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(NotionApiException.class)
+    @ExceptionHandler(NotionException.class)
     @ApiResponse(responseCode = "502", description = "노션 연동 장애")
-    public ResponseEntity<ApiErrorResponse> handleNotionApiException(NotionApiException e) {
+    public ResponseEntity<ApiErrorResponse> handleNotionApiException(NotionException e) {
         return ResponseEntity
             .status(HttpStatus.BAD_GATEWAY)
             .body(new ApiErrorResponse(

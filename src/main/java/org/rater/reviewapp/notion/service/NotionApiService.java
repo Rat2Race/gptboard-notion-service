@@ -1,14 +1,14 @@
-package org.rater.reviewapp.login.notion.service;
+package org.rater.reviewapp.notion.service;
 
 import java.util.Base64;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.rater.reviewapp.global.exception.NotionApiException;
-import org.rater.reviewapp.login.config.NotionProperties;
-import org.rater.reviewapp.login.notion.dto.request.NotionRevokeRequest;
-import org.rater.reviewapp.login.notion.dto.request.NotionTokenRequest;
-import org.rater.reviewapp.login.notion.dto.response.NotionTokenResponse;
+import org.rater.reviewapp.global.exception.NotionException;
+import org.rater.reviewapp.notion.config.NotionProperties;
+import org.rater.reviewapp.notion.dto.request.NotionRevokeRequest;
+import org.rater.reviewapp.notion.dto.request.NotionTokenRequest;
+import org.rater.reviewapp.notion.dto.response.NotionTokenResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -17,12 +17,12 @@ import org.springframework.web.client.RestClient;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class NotionService {
+public class NotionApiService {
 
     private final NotionProperties notion;
     private final RestClient notionClient;
 
-    public NotionTokenResponse generateToken(NotionTokenRequest request) {
+    public NotionTokenResponse fetchToken(NotionTokenRequest request) {
         try {
             return notionClient.post()
                 .uri("/oauth/token")
@@ -34,7 +34,7 @@ public class NotionService {
                 .body(NotionTokenResponse.class);
         } catch (Exception e) {
             log.error("Notion 토큰 발급 실패", e);
-            throw new NotionApiException("Notion 토큰 발급에 실패했습니다.", e);
+            throw new NotionException("Notion 토큰 발급에 실패했습니다.", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class NotionService {
                 .is2xxSuccessful();
         } catch (Exception e) {
             log.error("Notion 토큰 삭제 실패", e);
-            throw new NotionApiException("Notion 토큰 삭제 중 오류가 발생했습니다.", e);
+            throw new NotionException("Notion 토큰 삭제 중 오류가 발생했습니다.", e);
         }
     }
 

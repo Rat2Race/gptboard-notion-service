@@ -1,4 +1,4 @@
-package org.rater.reviewapp.login.notion.controller;
+package org.rater.reviewapp.notion.controller;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
@@ -7,10 +7,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
-import org.rater.reviewapp.login.notion.dto.request.NotionRevokeRequest;
-import org.rater.reviewapp.login.notion.dto.request.NotionTokenRequest;
-import org.rater.reviewapp.login.notion.dto.response.NotionTokenResponse;
-import org.rater.reviewapp.login.notion.service.NotionService;
+import org.rater.reviewapp.notion.dto.request.NotionRevokeRequest;
+import org.rater.reviewapp.notion.dto.request.NotionTokenRequest;
+import org.rater.reviewapp.notion.dto.response.NotionTokenResponse;
+import org.rater.reviewapp.notion.service.NotionApiService;
+import org.rater.reviewapp.notion.service.NotionUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = "Notion API", description = "Notion 서비스 관련 처리 Controller")
 public class NotionController {
 
-    private final NotionService notionService;
+    private final NotionApiService notionApiService;
+    private final NotionUserService notionUserService;
 
     /**
      * 백엔드 테스트용 / 프론트에서 구현할 예정 프론트에서 인증 링크 제공해서 클라이언트의 코드값을 받아야함
@@ -41,7 +43,7 @@ public class NotionController {
     )
     @ApiResponse(responseCode = "302", description = "Notion 인증 URL로 리다이렉트")
     public void notionLogin(HttpServletResponse response) throws IOException {
-        response.sendRedirect(notionService.getNotionOAuthUrl());
+        response.sendRedirect(notionApiService.getNotionOAuthUrl());
     }
 
     /**
@@ -63,7 +65,8 @@ public class NotionController {
     )
     public ResponseEntity<NotionTokenResponse> generateNotionToken(
         @RequestBody NotionTokenRequest request) {
-        NotionTokenResponse response = notionService.generateToken(request);
+        NotionTokenResponse response = notionApiService.fetchToken(request);
+        notionUserService.saveNotionUser(response);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -74,7 +77,15 @@ public class NotionController {
     )
     public ResponseEntity<Boolean> revokeNotionToken(
         @RequestBody NotionRevokeRequest request) {
-        boolean response = notionService.revokeToken(request);
+        boolean response = notionApiService.revokeToken(request);
+        /**
+         *  일단 임시로 토큰 revoke 할때마다 DB에서 유저정보 완전삭제
+         *  나중에 토큰 update 만들어서 수정할 예정
+         */
+        notionUserService.deleteNotionUser(request.accessToken());
+
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+
 }

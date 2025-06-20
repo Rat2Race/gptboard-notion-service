@@ -1,4 +1,4 @@
-package org.rater.reviewapp.login.entity;
+package org.rater.reviewapp.notion.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +10,7 @@ import org.rater.reviewapp.global.entity.AuditingFields;
 
 @Getter
 @Entity
-public class User extends AuditingFields {
+public class NotionUser extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,15 @@ public class User extends AuditingFields {
 
     @Column(length = 100)
     private String accessToken;
+
+    protected NotionUser() {}
+
+    private NotionUser(String userId, String accessToken) {
+        this.userId = userId;
+        this.accessToken = accessToken;
+    }
+
+    public static NotionUser of(String userId, String accessToken) {
+        return new NotionUser(userId, accessToken);
+    }
 }

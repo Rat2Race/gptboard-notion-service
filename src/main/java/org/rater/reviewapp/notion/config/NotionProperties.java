@@ -1,4 +1,4 @@
-package org.rater.reviewapp.login.config;
+package org.rater.reviewapp.notion.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
