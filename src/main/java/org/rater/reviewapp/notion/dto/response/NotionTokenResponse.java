@@ -3,6 +3,7 @@ package org.rater.reviewapp.notion.dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(description = "Notion 액세스 토큰 응답 객체")
 public record NotionTokenResponse(
     @Schema(description = "액세스 토큰")
     @JsonProperty("access_token")
@@ -32,7 +33,8 @@ public record NotionTokenResponse(
     String workspaceName
 ) {
 
-    public static record Owner(
+    @Schema(description = "워크스페이스 소유자 정보")
+    public record Owner(
         @Schema(description = "워크스페이스 존재 여부")
         boolean workspace
     ) {

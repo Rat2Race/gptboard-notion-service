@@ -7,8 +7,13 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.rater.reviewapp.notion.dto.request.NotionPageRequest;
 import org.rater.reviewapp.notion.dto.request.NotionRevokeRequest;
+import org.rater.reviewapp.notion.dto.request.NotionSearchRequest;
 import org.rater.reviewapp.notion.dto.request.NotionTokenRequest;
+import org.rater.reviewapp.notion.dto.response.NotionPageResponse;
+import org.rater.reviewapp.notion.dto.response.NotionSearchPageIdResponse;
+import org.rater.reviewapp.notion.dto.response.NotionSearchResponse;
 import org.rater.reviewapp.notion.dto.response.NotionTokenResponse;
 import org.rater.reviewapp.notion.service.NotionApiService;
 import org.rater.reviewapp.notion.service.NotionUserService;
@@ -63,6 +68,9 @@ public class NotionController {
         summary = "Notion 액세스 토큰 발급",
         description = "Notion 인증 코드를 이용해 액세스 토큰을 발급합니다."
     )
+    @ApiResponse(responseCode = "200", description = "액세스 토큰 발급 성공")
+    @ApiResponse(responseCode = "400", description = "입력값 오류")
+    @ApiResponse(responseCode = "502", description = "노션 연동 장애")
     public ResponseEntity<NotionTokenResponse> generateNotionToken(
         @RequestBody NotionTokenRequest request) {
         NotionTokenResponse response = notionApiService.fetchToken(request);
@@ -75,17 +83,58 @@ public class NotionController {
         summary = "Notion 액세스 토큰 취소",
         description = "Notion 액세스 토큰을 삭제합니다."
     )
+    @ApiResponse(responseCode = "200", description = "액세스 토큰 취소 성공")
+    @ApiResponse(responseCode = "400", description = "입력값 오류")
+    @ApiResponse(responseCode = "502", description = "노션 연동 장애")
     public ResponseEntity<Boolean> revokeNotionToken(
         @RequestBody NotionRevokeRequest request) {
         boolean response = notionApiService.revokeToken(request);
-        /**
-         *  일단 임시로 토큰 revoke 할때마다 DB에서 유저정보 완전삭제
-         *  나중에 토큰 update 만들어서 수정할 예정
-         */
+
         notionUserService.deleteNotionUser(request.accessToken());
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @PostMapping("/notion/page")
+    @Operation(
+        summary = "Notion 페이지 조회",
+        description = "Notion 액세스 토큰과 페이지 ID를 이용해 페이지 정보를 조회합니다."
+    )
+    @ApiResponse(responseCode = "200", description = "페이지 조회 성공")
+    @ApiResponse(responseCode = "400", description = "입력값 오류")
+    @ApiResponse(responseCode = "502", description = "노션 연동 장애")
+    public ResponseEntity<NotionPageResponse> retrieveNotionPage(
+        @RequestBody NotionPageRequest request) {
+        NotionPageResponse response = notionApiService.retrievePage(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
+
+    @PostMapping("/notion/search")
+    @Operation(
+        summary = "Notion 페이지 검색",
+        description = "Notion 액세스 토큰과 검색어를 이용해 페이지를 검색합니다."
+    )
+    @ApiResponse(responseCode = "200", description = "페이지 검색 성공")
+    @ApiResponse(responseCode = "400", description = "입력값 오류")
+    @ApiResponse(responseCode = "502", description = "노션 연동 장애")
+    public ResponseEntity<NotionSearchResponse> searchNotionPages(
+        @RequestBody NotionSearchRequest request) {
+        NotionSearchResponse response = notionApiService.searchPages(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+//    @PostMapping("/notion/search/page-ids")
+//    @Operation(
+//        summary = "Notion 페이지 ID 검색",
+//        description = "Notion 액세스 토큰과 검색어를 이용해 페이지 ID를 검색합니다."
+//    )
+//    @ApiResponse(responseCode = "200", description = "페이지 ID 검색 성공")
+//    @ApiResponse(responseCode = "400", description = "입력값 오류")
+//    @ApiResponse(responseCode = "502", description = "노션 연동 장애")
+//    public ResponseEntity<NotionSearchPageIdResponse> searchNotionPageIds(
+//        @RequestBody NotionSearchRequest request) {
+//        NotionSearchPageIdResponse response = notionApiService.searchPageIds(request);
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//    }
 }

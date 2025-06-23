@@ -3,6 +3,9 @@ spring:
     name: Review-app
   profiles:
     include: secret
+#  #적용안됨;;
+#  jackson:
+#    property-naming-strategy: SNAKE_CASE
 springdoc:
   swagger-ui:
     enabled: true

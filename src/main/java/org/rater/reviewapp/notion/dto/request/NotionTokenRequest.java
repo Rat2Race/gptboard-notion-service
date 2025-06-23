@@ -9,9 +9,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
  * @param code
  * @param redirectUri
  */
-
+@Schema(description = "Notion 액세스 토큰 발급 요청")
 public record NotionTokenRequest(
-    @Schema(description = "OAuth 인증 방식", example = "authorization_code")
+    @Schema(description = "OAuth 인증 방식")
     @JsonProperty("grant_type")
     String grantType,
 

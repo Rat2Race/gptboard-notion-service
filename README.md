@@ -94,7 +94,12 @@ ERD 다이어그램 (DB 좀 더 공부하고 적어야지)
 
 | Method | Endpoint | Description |
 | ------ | -------- | ----------- |
-| ...    | ...      | ...         |
+| GET    | /api/oauth/login | Notion OAuth 로그인 리다이렉트 |
+| POST   | /api/oauth/token | Notion 액세스 토큰 발급 |
+| POST   | /api/oauth/revoke | Notion 액세스 토큰 취소 |
+| POST   | /api/notion/page | Notion 페이지 조회 |
+| POST   | /api/notion/search | Notion 페이지 검색 |
+| POST   | /api/notion/search/page-ids | Notion 페이지 ID 검색 |
 
 <br>
 
