@@ -1,6 +1,5 @@
 package org.rater.reviewapp.notion.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,8 +17,6 @@ import org.rater.reviewapp.notion.dto.response.SearchNotionResponse;
 import org.rater.reviewapp.notion.service.NotionAuthService;
 import org.rater.reviewapp.notion.service.NotionPageService;
 import org.rater.reviewapp.notion.service.NotionUserService;
-import org.rater.reviewapp.notion.util.NotionTextBlockParser;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -141,7 +138,6 @@ public class NotionController {
         @Parameter(description = "액세스 토큰 (Bearer ...)", required = true)
         @RequestHeader("Authorization") String accessToken) {
         GetNotionContentResponse response = notionPageService.retrieveContent(accessToken, blockId);
-//        List<String> textList = notionPageService.extractText(accessToken, response);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -153,11 +149,12 @@ public class NotionController {
      * @param accessToken
      * @return
      */
-//    public ResponseEntity<List<String>> retrieveNotionContent(
-//        @PathVariable String blockId,
-//        @Parameter(description = "액세스 토큰 (Bearer ...)", required = true)
-//        @RequestHeader("Authorization") String accessToken) {
-//        GetNotionContentResponse response = notionApiService.retrieveNotionContent(accessToken, blockId);
-//        return ResponseEntity.status(HttpStatus.OK).body(notionApiService.extractAllTexts(response));
-//    }
+    @GetMapping("/notion/blocks/{blockId}/parser")
+    public ResponseEntity<List<String>> parserBlock(
+        @PathVariable String blockId,
+        @Parameter(description = "액세스 토큰 (Bearer ...)", required = true)
+        @RequestHeader("Authorization") String accessToken) {
+        GetNotionContentResponse rootBlocks = notionPageService.retrieveContent(accessToken, blockId);
+        return ResponseEntity.status(HttpStatus.OK).body(notionPageService.extractTexts(accessToken, rootBlocks));
+    }
 }
