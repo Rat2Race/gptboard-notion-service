@@ -1,10 +1,13 @@
 package org.rater.reviewapp.notion.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
-public record NotionSearchResponse(
+@Schema(description = "검색된 노션 객체들")
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record SearchNotionResponse(
     @Schema(description = "객체 타입")
     String object,
     
