@@ -1,10 +1,12 @@
 package org.rater.reviewapp.notion.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Notion 액세스 토큰 응답 객체")
-public record NotionTokenResponse(
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record IssueNotionTokenResponse(
     @Schema(description = "액세스 토큰")
     @JsonProperty("access_token")
     String accessToken,
@@ -12,10 +14,6 @@ public record NotionTokenResponse(
     @Schema(description = "봇 ID (고유값)")
     @JsonProperty("bot_id")
     String botId,
-
-    @Schema(description = "복제된 템플릿 ID")
-    @JsonProperty("duplicated_template_id")
-    String duplicatedTemplateId,
 
     @Schema(description = "워크스페이스 소유자 정보")
     Owner owner,
