@@ -25,11 +25,8 @@
 
 ## ✨ Features <a name="features"></a>
 
-- Notion OAuth2 인증 및 연동
 - 내 노션 페이지/DB 목록 조회 및 선택
 - 페이지 콘텐츠 읽기 및 파싱(Markdown/텍스트)
-- GPT API 기반 자동 퀴즈 생성
-- 퀴즈 풀이 및 정답/해설 확인
 
 <br>
 
@@ -50,7 +47,7 @@
 
 ```bash
 # 레포지토리 클론
-$ git clone https://github.com/Rat2Race/notion-review-app-spring.git
+$ git clone https://github.com/Rat2Race/gptboard-notion-service.git
 
 # 백엔드 폴더 이동 및 빌드
 $ cd backend
@@ -79,22 +76,25 @@ $ npm start
 
 - [ ] Notion OAuth 연동
 - [ ] 노션 페이지/DB 파싱
-- [ ] GPT API 연동 퀴즈 생성
-- [ ] 퀴즈 풀이 UI 구현
 
 <br>
 
 ## 🗄️ Database Schema <a name="database-schema"></a>
 
-ERD 다이어그램 (DB 좀 더 공부하고 적어야지)
+ERD 다이어그램
 
 <br>
 
 ## 🔗 API Endpoints <a name="api-endpoints"></a>
 
-| Method | Endpoint | Description |
-| ------ | -------- | ----------- |
-| ...    | ...      | ...         |
+| Method | Endpoint                    | Description            |
+| ------ |-----------------------------|------------------------|
+| GET    | /api/login                  | Notion OAuth 로그인 리다이렉트 |
+| POST   | /api/auth/issue             | Notion 액세스 토큰 발급       |
+| POST   | /api/auth/revoke            | Notion 액세스 토큰 취소       |
+| POST   | /api/notion/pages           | Notion 전체 페이지 조회       |
+| POST   | /api/notion/page/{pageId}          | Notion 특정 페이지 조회       |
+| POST   | /api/notion/blocks/{blockId}/children | Notion 페이지 전체 블록 조회    |
 
 <br>
 
