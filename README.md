@@ -2,7 +2,7 @@
 
 <img src="public/image/tiredMouse.png" width="200"/>
 
-### Notion Review App Backend ✅
+### GPT board notion service ✅
 <img src="https://img.shields.io/badge/Spring%20Boot-3.5.x-green" alt="Spring Boot" />
 <img src="https://img.shields.io/badge/OpenAI-GPT-blueviolet" alt="OpenAI" />
 <img src="https://img.shields.io/badge/Project%20Duration-2025.06.17~-%23a8e063?style=flat" alt="Project Duration" />
@@ -74,8 +74,8 @@ $ npm start
 
 ## 🗺 Roadmap <a name="roadmap"></a>
 
-- [ ] Notion OAuth 연동
-- [ ] 노션 페이지/DB 파싱
+- [x] Notion OAuth 연동
+- [x] 노션 페이지/DB 파싱
 
 <br>
 
